@@ -3,7 +3,11 @@
     <div class="column">
       <!-- <employee-component v-for="employee in employees" :employee="employee"/> -->
       <ul>
-         <li v-for="employee in employees" v-bind:key="employee">{{ employee.name }}</li>
+        <li v-for="employee in employees" v-bind:key="employee">
+          <router-link :to="{name: 'employee', params: {id: employee.id }}">
+            {{ employee.name }}
+          </router-link>
+        </li>
       </ul>
     </div>
   </div>
