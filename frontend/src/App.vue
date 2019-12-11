@@ -5,7 +5,11 @@
       <router-link to="/employees">Employees</router-link> |
       <router-link to="/positions">Positions</router-link><span v-if="isLoggedIn"> | <a @click="logout">Logout</a></span>
     </div>
-    <router-view/>
+    <md-app>
+      <md-app-content>
+        <router-view/>
+      </md-app-content>
+    </md-app>
   </div>
 </template>
 

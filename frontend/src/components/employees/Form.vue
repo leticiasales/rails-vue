@@ -1,35 +1,124 @@
 <template>
-  <form @submit.prevent="submit" class="form">
-    <label>Name</label>
-    <input required v-model="name" type="text" placeholder="Name"/>
-    <label>Salary</label>
-    <CurrencyInput v-model="salary" class="demo__currency-input"/>
-    <label>Position</label>
-    <input type="number" v-model="position_id"/>
-    <hr/>
-    <button type="submit">Create</button>
-  </form>
+  <div>
+    <form novalidate class="md-layout" @submit.prevent="validateUser">
+      <md-card class="md-layout-item md-size-50 md-small-size-100">
+        <md-card-header>
+          <div class="md-title">{{ title }}</div>
+        </md-card-header>
+        <md-card-content>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field>
+                <label for="name">name</label>
+                <md-input name="name" id="name" autocomplete="given-name" v-model="form.name" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.name.required">The name is required</span>
+                <span class="md-error" v-else-if="!$v.form.name.minlength">Invalid name</span>
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('position')">
+                <label for="position">position</label>
+                <md-select name="position" id="position" v-model="form.position" md-dense :disabled="sending">
+                  <md-option v-for="position in positions" :value="position.id"
+                      v-bind:key="position.id">{{ position.name }}
+                  </md-option>
+                </md-select>
+                <span class="md-error">The position is required</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('salary')">
+                <label for="salary">salary</label>
+                <span class="md-prefix">$</span>
+                <md-input name="salary" id="salary" v-model="form.salary" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.salary.required">The salary is required</span>
+              </md-field>
+            </div>
+          </div>
+          <md-progress-bar md-mode="indeterminate" v-if="sending" />
+
+          <md-card-actions>
+            <md-button type="submit" class="md-primary" :disabled="sending">
+              {{ submit }}
+            </md-button>
+          </md-card-actions>
+
+        </md-card-content>
+      </md-card>
+    </form>
+  </div>
 </template>
 
 <script>
+  import { validationMixin } from 'vuelidate'
+  import {
+    required,
+    minLength
+  } from 'vuelidate/lib/validators'
+
   export default {
-    data(){
-      return {
-        name: "",
-        salary: 0,
-        position_id: 0
+    data: () => ({
+      form: {
+        name: ''
+      },
+      positions: [],
+      sending: false
+    }),
+    props: {
+      title: String,
+      submit: String,
+      position: {}
+    },
+    mixins: [validationMixin],
+    mounted: function() {
+      this.form = this.position
+      this.$store.dispatch('get_positions')
+     .then((response) => this.positions = response.data)
+     .catch(err => console.log(err))
+    },
+    validations: {
+      form: {
+        name: {
+          required,
+          minLength: minLength(3)
+        }
       }
     },
     methods: {
-      submit: function () {
-        let employee = {
-          name: this.name,
-          salary: this.salary,
-          position_id: this.position_id,
+      getValidationClass (fieldName) {
+        const field = this.$v.form[fieldName]
+
+        if (field) {
+          return {
+            'md-invalid': field.$invalid && field.$dirty
+          }
         }
-        this.$parent.submit(employee)
-       .then(() => this.$router.push('/'))
+      },
+      clearForm () {
+        this.$v.$reset()
+        this.form.name = null
+      },
+      save () {
+        this.sending = true
+
+        let position = {
+          name: this.form.name
+        }
+        this.$parent.submit(position)
+       .then(() => {
+          this.sending = false
+          this.clearForm()
+        })
        .catch(err => console.log(err))
+      },
+      validate () {
+        this.$v.$touch()
+
+        if (!this.$v.$invalid) {
+          this.save()
+        }
       }
     }
   }
