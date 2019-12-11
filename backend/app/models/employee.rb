@@ -1,3 +1,3 @@
 class Employee < ApplicationRecord
-  belongs_to :position
+  has_one :position
 end
