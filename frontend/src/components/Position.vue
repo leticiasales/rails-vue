@@ -1,8 +1,7 @@
 <template>
   <div id="app" class="columns">
     <div class="column">
-      <h1>{{ employee.name }}</h1>
-      <h2>{{ employee.salary }}</h2>
+      <h1>{{ position.name }}</h1>
     </div>
   </div>
 </template>
@@ -12,12 +11,12 @@
   export default {
     data(){
       return {
-        employee: {}
+        position: {}
       }
     },
     mounted: function() {
-      this.$store.dispatch('get_employee_by_id', this.$route.params.id)
-       .then((response) => this.employee = response.data)
+      this.$store.dispatch('get_position_by_id', this.$route.params.id)
+       .then((response) => this.position = response.data)
        .catch(err => { console.log(err); })
     }
   }

@@ -1,9 +1,12 @@
 <template>
   <div id="app" class="columns">
     <div class="column">
-      <!-- <employee-component v-for="employee in employees" :employee="employee"/> -->
       <ul>
-         <li v-for="position in positions" v-bind:key="position">{{ position.name }}</li>
+        <li v-for="position in positions" v-bind:key="position.id">
+          <router-link :to="{name: 'position_id', params: {id: position.id }}">
+            {{ position.name }}
+          </router-link>
+        </li>
       </ul>
     </div>
   </div>

@@ -7,6 +7,7 @@ import Register from '../components/Register.vue'
 import Employees from '../components/Employees.vue'
 import Employee from '../components/Employee.vue'
 import Positions from '../components/Positions.vue'
+import Position from '../components/Position.vue'
 
 Vue.use(Router)
 
@@ -40,8 +41,8 @@ let router = new Router({
       }
     },
     {
-      path: '/employee/:id',
-      name: 'employee',
+      path: '/employees/:id',
+      name: 'employee_id',
       component: Employee,
       meta: { 
         requiresAuth: true
@@ -51,6 +52,14 @@ let router = new Router({
       path: '/positions',
       name: 'positions',
       component: Positions,
+      meta: { 
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/positions/:id',
+      name: 'position_id',
+      component: Position,
       meta: { 
         requiresAuth: true
       }
