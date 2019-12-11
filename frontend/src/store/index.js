@@ -76,7 +76,6 @@ export default new Vuex.Store({
     },
     get_employees({commit}){
       return new Promise((resolve, reject) => {
-      commit('get_employees')
       axios({url: 'http://localhost:3000/employees', method: 'GET' })
       .then(resp => {
         const employees = resp.data
@@ -87,9 +86,20 @@ export default new Vuex.Store({
         })
       })
     },
+    get_employee({commit}, id){
+      return new Promise((resolve, reject) => {
+      axios({url: 'http://localhost:3000/employees/' + id, method: 'GET' })
+      .then(resp => {
+        const employee = resp.data.employee
+        resolve(resp)
+      })
+      .catch(err => {
+        reject(err)
+        })
+      })
+    },
     get_positions({commit}){
       return new Promise((resolve, reject) => {
-      commit('get_positions')
       axios({url: 'http://localhost:3000/positions', method: 'GET' })
       .then(resp => {
         const employees = resp.data

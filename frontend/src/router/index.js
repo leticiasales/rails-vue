@@ -5,6 +5,7 @@ import Home from '../views/Home.vue'
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import Employees from '../components/Employees.vue'
+import Employee from '../components/Employee.vue'
 import Positions from '../components/Positions.vue'
 
 Vue.use(Router)
@@ -34,6 +35,14 @@ let router = new Router({
       path: '/employees',
       name: 'employees',
       component: Employees,
+      meta: { 
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/employee/:id',
+      name: 'employee',
+      component: Employee,
       meta: { 
         requiresAuth: true
       }
