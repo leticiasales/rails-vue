@@ -6,6 +6,7 @@ import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import EmployeesIndex from '../components/employees/Index.vue'
 import EmployeeShow from '../components/employees/Show.vue'
+import EmployeeNew from '../components/employees/New.vue'
 import PositionsIndex from '../components/positions/Index.vue'
 import PositionShow from '../components/positions/Show.vue'
 
@@ -36,6 +37,14 @@ let router = new Router({
       path: '/employees',
       name: 'employees',
       component: EmployeesIndex,
+      meta: { 
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/employees/new',
+      name: 'employee_new',
+      component: EmployeeNew,
       meta: { 
         requiresAuth: true
       }

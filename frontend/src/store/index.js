@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from '@/router'
 
 Vue.use(Vuex)
 
@@ -11,7 +12,7 @@ export default new Vuex.Store({
     user : {}
   },
   mutations: {
-    auth_request(state){
+    request(state){
       state.status = 'loading'
     },
     auth_success(state, token, user){
@@ -19,18 +20,21 @@ export default new Vuex.Store({
       state.token = token
       state.user = user
     },
-    auth_error(state){
-      state.status = 'error'
-    },
     logout(state){
       state.status = ''
       state.token = ''
     },
+    success(state, id){
+      state.status = 'success'
+    },
+    error(state){
+      state.status = 'error'
+    }
   },
   actions: {
     login({commit}, user){
       return new Promise((resolve, reject) => {
-        commit('auth_request')
+        commit('request')
         axios({
           url: 'http://localhost:3000/auth/login', data: user, method: 'POST'
         }).then(resp => {
@@ -41,7 +45,7 @@ export default new Vuex.Store({
           commit('auth_success', token, user)
           resolve(resp)
         }).catch(err => {
-          commit('auth_error')
+          commit('error', err)
           localStorage.removeItem('token')
           reject(err)
         })
@@ -49,7 +53,7 @@ export default new Vuex.Store({
     },
     register({commit}, user){
       return new Promise((resolve, reject) => {
-        commit('auth_request')
+        commit('request')
         axios({url: 'http://localhost:3000/register', data: user, method: 'POST' })
         .then(resp => {
           const token = resp.data.token
@@ -60,7 +64,7 @@ export default new Vuex.Store({
           resolve(resp)
         })
         .catch(err => {
-          commit('auth_error', err)
+          commit('error', err)
           localStorage.removeItem('token')
           reject(err)
         })
@@ -75,50 +79,76 @@ export default new Vuex.Store({
       })
     },
     get_employees({commit}){
+      commit('request')
       return new Promise((resolve, reject) => {
       axios({url: 'http://localhost:3000/employees', method: 'GET' })
       .then(resp => {
+        commit('success')
         const employees = resp.data
         resolve(resp)
       })
       .catch(err => {
-        reject(err)
+          commit('error', err)
+          reject(err)
         })
       })
     },
     get_employee_by_id({commit}, id){
+      commit('request')
       return new Promise((resolve, reject) => {
       axios({url: 'http://localhost:3000/employees/' + id, method: 'GET' })
       .then(resp => {
-        const employee = resp.data.employee
+        commit('success')
         resolve(resp)
       })
       .catch(err => {
+        commit('error', err)
         reject(err)
+        })
+      })
+    },
+    new_employee({commit}, employee){
+      commit('request')
+      return new Promise((resolve, reject) => {
+        commit('request')
+        axios({
+          url: 'http://localhost:3000/employees', data: employee, method: 'POST'
+        }).then(resp => {
+          commit('success')
+          resolve(resp)
+        }).catch(err => {
+          commit('error', err)
+          reject(err)
         })
       })
     },
     get_positions({commit}){
+      commit('request')
       return new Promise((resolve, reject) => {
       axios({url: 'http://localhost:3000/positions', method: 'GET' })
       .then(resp => {
+        commit('success')
         const employees = resp.data
         resolve(resp)
       })
       .catch(err => {
-        reject(err)
+          commit('error', err)
+          reject(err)
         })
       })
     },
     get_position_by_id({commit}, id){
+      commit('request')
       return new Promise((resolve, reject) => {
       axios({url: 'http://localhost:3000/positions/' + id, method: 'GET' })
       .then(resp => {
+        commit('success')
         const position = resp.data.position
         resolve(resp)
       })
       .catch(err => {
-        reject(err)
+          commit('error', err)
+          reject(err)
         })
       })
     }

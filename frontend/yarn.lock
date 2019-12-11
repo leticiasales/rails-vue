@@ -7994,6 +7994,11 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
+vue-currency-input@^1.14.2:
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/vue-currency-input/-/vue-currency-input-1.14.2.tgz#47a5eec607659546fb78f51e48f98d6508f27615"
+  integrity sha512-LQS47UnvLQK5AGxmgRG5j4FBvn8azqHjAlIO5QGzKDF2u8XkBFRSHKdY7IC27Zsxb8CrtjXqJmjI9zfyHR2+Cg==
+
 vue-eslint-parser@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-5.0.0.tgz#00f4e4da94ec974b821a26ff0ed0f7a78402b8a1"
