@@ -4,8 +4,8 @@ import store from '../store'
 import Home from '../views/Home.vue'
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
-import Employees from '../components/Employees.vue'
-import Employee from '../components/Employee.vue'
+import EmployeesView from '../components/employees/View.vue'
+import EmployeesIndex from '../components/employees/Index.vue'
 import Positions from '../components/Positions.vue'
 import Position from '../components/Position.vue'
 
@@ -35,7 +35,7 @@ let router = new Router({
     {
       path: '/employees',
       name: 'employees',
-      component: Employees,
+      component: EmployeesIndex,
       meta: { 
         requiresAuth: true
       }
@@ -43,7 +43,7 @@ let router = new Router({
     {
       path: '/employees/:id',
       name: 'employee_id',
-      component: Employee,
+      component: EmployeesView,
       meta: { 
         requiresAuth: true
       }
