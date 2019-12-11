@@ -11,3 +11,27 @@
    </form>
  </div>
 </template>
+
+<script>
+  export default {
+    data(){
+      return {
+        username : "",
+        password : ""
+      }
+    },
+    methods: {
+      login: function () {
+        let username = this.username 
+        let password = this.password
+        this.$store.dispatch('login', { username, password })
+       .then(() => this.$router.push('/'))
+       .catch(err => { /* eslint-disable no-console */
+                    console.log(err);
+                      /* eslint-enable no-console */
+                    })
+      }
+    }
+
+  }
+</script>
