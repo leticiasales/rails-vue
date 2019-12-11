@@ -4,10 +4,10 @@ import store from '../store'
 import Home from '../views/Home.vue'
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
-import EmployeesView from '../components/employees/View.vue'
 import EmployeesIndex from '../components/employees/Index.vue'
-import Positions from '../components/Positions.vue'
-import Position from '../components/Position.vue'
+import EmployeeShow from '../components/employees/Show.vue'
+import PositionsIndex from '../components/positions/Index.vue'
+import PositionShow from '../components/positions/Show.vue'
 
 Vue.use(Router)
 
@@ -43,7 +43,7 @@ let router = new Router({
     {
       path: '/employees/:id',
       name: 'employee_id',
-      component: EmployeesView,
+      component: EmployeeShow,
       meta: { 
         requiresAuth: true
       }
@@ -51,7 +51,7 @@ let router = new Router({
     {
       path: '/positions',
       name: 'positions',
-      component: Positions,
+      component: PositionsIndex,
       meta: { 
         requiresAuth: true
       }
@@ -59,7 +59,7 @@ let router = new Router({
     {
       path: '/positions/:id',
       name: 'position_id',
-      component: Position,
+      component: PositionShow,
       meta: { 
         requiresAuth: true
       }
