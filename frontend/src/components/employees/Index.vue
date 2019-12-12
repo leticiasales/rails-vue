@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div>
+      <router-link :to="{name: 'employee_new'}">
+        <md-button>New Employee</md-button>
+      </router-link>
+    </div>
+
     <md-card v-for="employee in employees" v-bind:key="employee.id">
       <md-card-header>
         <div class="md-title">{{ employee.name }}</div>
@@ -16,6 +22,9 @@
         </router-link>
         <router-link :to="{name: 'employee_edit', params: { id: employee.id }}">
           <md-button>Edit</md-button>
+        </router-link>
+        <router-link :to="{name: 'employee_edit', params: { id: employee.id }}">
+          <md-button>Delete</md-button>
         </router-link>
       </md-card-actions>
     </md-card>
@@ -34,6 +43,13 @@
       this.$store.dispatch('get_employees')
        .then((response) => this.employees = response.data)
        .catch(err => { console.log(err); })
+    },
+    methods: {
+      delete: function (employee) {
+        this.$store.dispatch('delete_employee', employee)
+       .then((response) => this.$router.push('/employees'))
+       .catch(err => console.log(err))
+      }
     }
   }
 </script>

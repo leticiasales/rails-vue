@@ -119,12 +119,8 @@
           salary: this.form.salary,
           position_id: this.form.position_id,
         }
+        
         this.$parent.submit(employee)
-       .then(() => {
-          this.sending = false
-          this.clearForm()
-        })
-       .catch(err => console.log(err))
       },
       validate () {
         this.$v.$touch()

@@ -53,7 +53,7 @@
     mixins: [validationMixin],
     mounted: function() {
       if (this.position)
-        this.form = this.position
+        this.form.name = this.position.name
       this.$store.dispatch('get_positions')
      .then((response) => this.positions = response.data)
      .catch(err => console.log(err))
@@ -88,11 +88,6 @@
         }
         
         this.$parent.submit(position)
-       .then(() => {
-          this.sending = false
-          this.clearForm()
-        })
-       .catch(err => console.log(err))
       },
       validate () {
         this.$v.$touch()

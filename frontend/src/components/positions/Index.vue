@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div>
+      <router-link :to="{name: 'position_new'}">
+        <md-button>New Position</md-button>
+      </router-link>
+    </div>
+
     <md-card v-for="position in positions" v-bind:key="position.id">
       <md-card-header>
         <div class="md-title">{{ position.name }}</div>

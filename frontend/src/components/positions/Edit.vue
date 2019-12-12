@@ -1,6 +1,6 @@
 <template>
  <div>
-  <Form title="Edit Position" submit="Save" :position="this.position">
+  <Form title="Edit Position" submit="Save" :position="this.position" :id="this.$route.params.id">
   </Form>
  </div>
 </template>

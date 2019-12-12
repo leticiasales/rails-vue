@@ -107,6 +107,20 @@ export default new Vuex.Store({
         })
       })
     },
+    delete_employee({commit}, id){
+      commit('request')
+      return new Promise((resolve, reject) => {
+      axios({url: 'http://localhost:3000/employees/' + id, method: 'DELETE' })
+      .then(resp => {
+        commit('success')
+        resolve(resp)
+      })
+      .catch(err => {
+        commit('error', err)
+        reject(err)
+        })
+      })
+    },
     new_employee({commit}, employee){
       commit('request')
       return new Promise((resolve, reject) => {
@@ -177,7 +191,22 @@ export default new Vuex.Store({
           reject(err)
         })
       })
-    },    new_position({commit}, position){
+    },
+    delete_position({commit}, id){
+      commit('request')
+      return new Promise((resolve, reject) => {
+      axios({url: 'http://localhost:3000/positions/' + id, method: 'DELETE' })
+      .then(resp => {
+        commit('success')
+        resolve(resp)
+      })
+      .catch(err => {
+        commit('error', err)
+        reject(err)
+        })
+      })
+    },
+    new_position({commit}, position){
       commit('request')
       return new Promise((resolve, reject) => {
         commit('request')
