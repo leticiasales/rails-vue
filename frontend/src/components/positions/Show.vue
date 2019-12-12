@@ -1,10 +1,19 @@
 <template>
-  <div id="app" class="columns">
-    <div class="column">
-      <h1>{{ position.name }}</h1>
-    </div>
+  <div>
+    <md-card class="show">
+      <md-card-header>
+        <div class="md-title">{{ position.name }}</div>
+      </md-card-header>
+
+      <md-card-actions>
+        <router-link :to="{name: 'position_edit', params: {id: position.id }}">
+          <md-button>Edit</md-button>
+        </router-link>
+      </md-card-actions>
+    </md-card>
   </div>
 </template>
+
 
 
 <script>

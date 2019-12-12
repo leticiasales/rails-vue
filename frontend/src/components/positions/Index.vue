@@ -1,14 +1,19 @@
 <template>
-  <div id="app" class="columns">
-    <div class="column">
-      <ul>
-        <li v-for="position in positions" v-bind:key="position.id">
-          <router-link :to="{name: 'position_id', params: {id: position.id }}">
-            {{ position.name }}
-          </router-link>
-        </li>
-      </ul>
-    </div>
+  <div>
+    <md-card v-for="position in positions" v-bind:key="position.id">
+      <md-card-header>
+        <div class="md-title">{{ position.name }}</div>
+      </md-card-header>
+
+      <md-card-actions>
+        <router-link :to="{name: 'position_id', params: {id: position.id }}">
+          <md-button>View</md-button>
+        </router-link>
+        <router-link :to="{name: 'position_edit', params: {id: position.id }}">
+          <md-button>Edit</md-button>
+        </router-link>
+      </md-card-actions>
+    </md-card>
   </div>
 </template>
 
@@ -20,7 +25,6 @@
         positions: []
       }
     },
-    methods: {},
     mounted: function() {
       this.$store.dispatch('get_positions')
        .then((response) => this.positions = response.data)

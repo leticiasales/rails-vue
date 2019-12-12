@@ -122,13 +122,27 @@ export default new Vuex.Store({
         })
       })
     },
+    edit_employee({commit}, employee){
+      commit('request')
+      return new Promise((resolve, reject) => {
+        commit('request')
+        axios({
+          url: 'http://localhost:3000/employees/' + employee.id, data: employee, method: 'PUT'
+        }).then(resp => {
+          commit('success')
+          resolve(resp)
+        }).catch(err => {
+          commit('error', err)
+          reject(err)
+        })
+      })
+    },
     get_positions({commit}){
       commit('request')
       return new Promise((resolve, reject) => {
       axios({url: 'http://localhost:3000/positions', method: 'GET' })
       .then(resp => {
         commit('success')
-        const employees = resp.data
         resolve(resp)
       })
       .catch(err => {
@@ -151,7 +165,36 @@ export default new Vuex.Store({
           reject(err)
         })
       })
-    }
+    },    new_position({commit}, position){
+      commit('request')
+      return new Promise((resolve, reject) => {
+        commit('request')
+        axios({
+          url: 'http://localhost:3000/positions', data: position, method: 'POST'
+        }).then(resp => {
+          commit('success')
+          resolve(resp)
+        }).catch(err => {
+          commit('error', err)
+          reject(err)
+        })
+      })
+    },
+    edit_position({commit}, position){
+      commit('request')
+      return new Promise((resolve, reject) => {
+        commit('request')
+        axios({
+          url: 'http://localhost:3000/positions/' + position.id, data: position, method: 'PUT'
+        }).then(resp => {
+          commit('success')
+          resolve(resp)
+        }).catch(err => {
+          commit('error', err)
+          reject(err)
+        })
+      })
+    },
   },
   getters : {
     isLoggedIn: state => !!state.token,
