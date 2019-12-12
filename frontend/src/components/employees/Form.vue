@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form novalidate class="md-layout" @submit.prevent="validateUser">
+    <form novalidate class="md-layout" @submit.prevent="validate">
       <md-card class="md-layout-item md-size-50 md-small-size-100">
         <md-card-header>
           <div class="md-title">{{ title }}</div>
@@ -61,7 +61,9 @@
   export default {
     data: () => ({
       form: {
-        name: ''
+        name: '',
+        salary: null,
+        position_id: null
       },
       positions: [],
       sending: false
@@ -69,11 +71,12 @@
     props: {
       title: String,
       submit: String,
-      position: {}
+      employee: {}
     },
     mixins: [validationMixin],
     mounted: function() {
-      this.form = this.position
+      if (this.employee)
+        this.form = this.employee
       this.$store.dispatch('get_positions')
      .then((response) => this.positions = response.data)
      .catch(err => console.log(err))
@@ -83,6 +86,12 @@
         name: {
           required,
           minLength: minLength(3)
+        },
+        salary: {
+          required
+        },
+        position_id: {
+          required
         }
       }
     },
@@ -99,14 +108,18 @@
       clearForm () {
         this.$v.$reset()
         this.form.name = null
+        this.form.salary = null
+        this.form.position_id = null
       },
       save () {
         this.sending = true
 
-        let position = {
-          name: this.form.name
+        let employee = {
+          name: this.form.name,
+          salary: this.form.salary,
+          position_id: this.form.position_id,
         }
-        this.$parent.submit(position)
+        this.$parent.submit(employee)
        .then(() => {
           this.sending = false
           this.clearForm()

@@ -111,15 +111,27 @@ export default new Vuex.Store({
       commit('request')
       return new Promise((resolve, reject) => {
         commit('request')
-        axios({
-          url: 'http://localhost:3000/employees', data: employee, method: 'POST'
-        }).then(resp => {
-          commit('success')
-          resolve(resp)
-        }).catch(err => {
-          commit('error', err)
-          reject(err)
-        })
+        if (employee.id) {
+          axios({
+            url: 'http://localhost:3000/employees/' + employee.id, data: employee, method: 'PUT'
+          }).then(resp => {
+            commit('success')
+            resolve(resp)
+          }).catch(err => {
+            commit('error', err)
+            reject(err)
+          })
+        } else {
+          axios({
+            url: 'http://localhost:3000/employees', data: employee, method: 'POST'
+          }).then(resp => {
+            commit('success')
+            resolve(resp)
+          }).catch(err => {
+            commit('error', err)
+            reject(err)
+          })
+        }
       })
     },
     edit_employee({commit}, employee){

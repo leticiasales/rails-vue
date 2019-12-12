@@ -10,6 +10,8 @@ import EmployeeNew from '../components/employees/New.vue'
 import EmployeeEdit from '../components/employees/Edit.vue'
 import PositionsIndex from '../components/positions/Index.vue'
 import PositionShow from '../components/positions/Show.vue'
+import PositionNew from '../components/positions/New.vue'
+import PositionEdit from '../components/positions/Edit.vue'
 
 Vue.use(Router)
 
@@ -51,14 +53,6 @@ let router = new Router({
       }
     },
     {
-      path: '/employees/:id',
-      name: 'employee_id',
-      component: EmployeeShow,
-      meta: { 
-        requiresAuth: true
-      }
-    },
-    {
       path: '/employees/:id/edit',
       name: 'employee_edit',
       component: EmployeeEdit,
@@ -67,9 +61,33 @@ let router = new Router({
       }
     },
     {
+      path: '/employees/:id',
+      name: 'employee_id',
+      component: EmployeeShow,
+      meta: { 
+        requiresAuth: true
+      }
+    },
+    {
       path: '/positions',
       name: 'positions',
       component: PositionsIndex,
+      meta: { 
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/positions/new',
+      name: 'position_new',
+      component: PositionNew,
+      meta: { 
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/positions/:id/edit',
+      name: 'position_edit',
+      component: PositionEdit,
       meta: { 
         requiresAuth: true
       }

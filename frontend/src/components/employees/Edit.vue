@@ -11,6 +11,9 @@ import Form from './Form.vue';
 
 export default {
   name: 'employee-new',
+  props: {
+    id: Number
+  },
   components: {
     Form
   },

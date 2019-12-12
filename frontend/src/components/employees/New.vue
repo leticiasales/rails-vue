@@ -1,6 +1,6 @@
 <template>
  <div>
-  <Form title="New Position" submit="Create" :position="null"/>
+  <Form title="New Employee" submit="Create" :employee="null"/>
  </div>
 </template>
 
@@ -9,14 +9,14 @@
 import Form from './Form.vue';
 
 export default {
-  name: 'position-new',
+  name: 'employee-new',
   components: {
     Form
   },
   methods: {
-    submit: function (position) {
-      this.$store.dispatch('new_position', position)
-     .then((response) => this.$router.push('/positions/' + this.data.id))
+    submit: function (employee) {
+      this.$store.dispatch('new_employee', employee)
+     .then((response) => this.$router.push('/employees/' + this.data.id))
      .catch(err => console.log(err))
     }
   }

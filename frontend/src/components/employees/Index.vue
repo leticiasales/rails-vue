@@ -11,10 +11,10 @@
       </md-card-content>
 
       <md-card-actions>
-        <router-link :to="{name: 'employee_id', params: {id: employee.id }}">
+        <router-link :to="{name: 'employee_id', params: { id: employee.id }}">
           <md-button>View</md-button>
         </router-link>
-        <router-link :to="{name: 'employee_edit', params: {id: employee.id }}">
+        <router-link :to="{name: 'employee_edit', params: { id: employee.id }}">
           <md-button>Edit</md-button>
         </router-link>
       </md-card-actions>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-card>
+    <md-card class="show">
       <md-card-header>
         <div class="md-title">{{ employee.name }}</div>
       </md-card-header>
