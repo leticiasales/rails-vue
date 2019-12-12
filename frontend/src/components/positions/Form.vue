@@ -51,9 +51,10 @@
       position: {}
     },
     mixins: [validationMixin],
-    mounted: function() {
-      if (this.position)
+    beforeMount: function() {
+      if (this.position) {
         this.form.name = this.position.name
+      }
       this.$store.dispatch('get_positions')
      .then((response) => this.positions = response.data)
      .catch(err => console.log(err))
@@ -84,10 +85,13 @@
         this.sending = true
 
         let position = {
+          id: this.$route.params.id,
           name: this.form.name
         }
         
         this.$parent.submit(position)
+       .then((response) => this.$router.push('/positions/' + response.data.id))
+       .catch(err => console.log(err))
       },
       validate () {
         this.$v.$touch()

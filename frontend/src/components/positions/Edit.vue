@@ -1,6 +1,6 @@
 <template>
  <div>
-  <Form title="Edit Position" submit="Save" :position="this.position" :id="this.$route.params.id">
+  <Form title="Edit Position" submit="Save" :position="this.position">
   </Form>
  </div>
 </template>
@@ -22,7 +22,7 @@ export default {
       position: {}
     }
   },
-  mounted: function() {
+  beforeMount: function() {
     this.$store.dispatch('get_position_by_id', this.$route.params.id)
      .then((response) => this.position = response.data)
      .catch(err => { console.log(err); })

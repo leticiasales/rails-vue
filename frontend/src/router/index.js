@@ -85,7 +85,7 @@ let router = new Router({
       }
     },
     {
-      path: '/positions/:id/edit',
+      path: '/positions/edit/:id',
       name: 'position_edit',
       component: PositionEdit,
       meta: { 
