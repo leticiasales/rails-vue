@@ -30,7 +30,7 @@ export default {
   methods: {
     submit: function (position) {
       this.$store.dispatch('edit_position', position)
-     .then((response) => this.$router.push('/positions/' + this.data.id))
+     .then((response) => this.$router.push('/positions/' + response.data.id))
      .catch(err => console.log(err))
     }
   }
