@@ -8,7 +8,7 @@
         <md-card-content>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field>
+              <md-field :class="getValidationClass('name')">
                 <label for="name">name</label>
                 <md-input name="name" id="name" autocomplete="given-name" v-model="form.name" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.name.required">The name is required</span>
@@ -18,9 +18,9 @@
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('position')">
-                <label for="position">position</label>
-                <md-select name="position" id="position" v-model="form.position" md-dense :disabled="sending">
+              <md-field :class="getValidationClass('position_id')">
+                <label for="position_id">position</label>
+                <md-select name="position_id" id="position_id" v-model="form.position_id" md-dense :disabled="sending">
                   <md-option v-for="position in positions" :value="position.id"
                       v-bind:key="position.id">{{ position.name }}
                   </md-option>
@@ -70,13 +70,17 @@
     }),
     props: {
       title: String,
-      submit: String,
-      employee: {}
+      submit: String
     },
     mixins: [validationMixin],
-    mounted: function() {
-      if (this.employee)
-        this.form = this.employee
+    beforeMount: function() {
+      if (this.employee) {
+        this.form  = this.employee
+      } else {
+        this.$store.dispatch('get_employee_by_id', this.$route.params.id)
+         .then((response) => this.form = response.data)
+         .catch(err => { console.log(err); })
+      }
       this.$store.dispatch('get_positions')
      .then((response) => this.positions = response.data)
      .catch(err => console.log(err))
@@ -115,12 +119,15 @@
         this.sending = true
 
         let employee = {
+          id: this.$route.params.id,
           name: this.form.name,
           salary: this.form.salary,
           position_id: this.form.position_id,
         }
         
         this.$parent.submit(employee)
+       .then((response) => this.$router.push('/employees/' + response.data.id))
+       .catch(err => console.log(err))
       },
       validate () {
         this.$v.$touch()

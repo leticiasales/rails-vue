@@ -23,9 +23,7 @@
         <router-link :to="{name: 'employee_edit', params: { id: employee.id }}">
           <md-button>Edit</md-button>
         </router-link>
-        <router-link :to="{name: 'employee_edit', params: { id: employee.id }}">
-          <md-button>Delete</md-button>
-        </router-link>
+        <md-button @click="delete_employee(employee)">Delete</md-button>
       </md-card-actions>
     </md-card>
   </div>
@@ -45,9 +43,9 @@
        .catch(err => { console.log(err); })
     },
     methods: {
-      delete: function (employee) {
-        this.$store.dispatch('delete_employee', employee)
-       .then((response) => this.$router.push('/employees'))
+      delete_employee: function (employee) {
+        this.$store.dispatch('delete_employee', employee.id)
+       .then((response) => this.$router.go())
        .catch(err => console.log(err))
       }
     }

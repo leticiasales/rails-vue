@@ -6,17 +6,20 @@
       <div class="md-layout md-gutter">
         <div class="md-layout-item md-small-size-100">
           <md-field>
-            <label for="username">username</label>
-            <md-input name="username" id="username" autocomplete="given-name" v-model="form.username" :disabled="sending" />
-            <span class="md-error" v-if="!$v.form.username.required">The username is required</span>
-            <span class="md-error" v-else-if="!$v.form.username.minlength">Invalid username</span>
+            <label for="username">Username</label>
+            <md-input name="username" id="username" autocomplete="given-name" v-model="username"/>
           </md-field>
           <md-field>
-            <label>Password toggle</label>
-            <md-input v-model="password" type="password" placeholder="Password"></md-input>
+            <label for="password">Password</label>
+            <md-input v-model="password" name="password" type="password" placeholder="Password"></md-input>
           </md-field>
         </div>
       </div>
+      <md-card-actions>
+        <md-button type="submit" class="md-primary">
+          Login
+        </md-button>
+      </md-card-actions>
     </md-card-content>
   </form>
 </div>
@@ -36,10 +39,7 @@
         let password = this.password
         this.$store.dispatch('login', { username, password })
        .then(() => this.$router.push('/'))
-       .catch(err => { /* eslint-disable no-console */
-                    console.log(err);
-                      /* eslint-enable no-console */
-                    })
+       .catch(err => { console.log(err); })
       }
     }
 

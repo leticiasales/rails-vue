@@ -53,11 +53,12 @@
     mixins: [validationMixin],
     beforeMount: function() {
       if (this.position) {
-        this.form.name = this.position.name
+        this.form  = this.position
+      } else {
+        this.$store.dispatch('get_position_by_id', this.$route.params.id)
+         .then((response) => this.form = response.data)
+         .catch(err => { console.log(err); })
       }
-      this.$store.dispatch('get_positions')
-     .then((response) => this.positions = response.data)
-     .catch(err => console.log(err))
     },
     validations: {
       form: {
