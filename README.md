@@ -29,4 +29,4 @@ docker-compose run backend rspec
 ## Known bugs
 
 - User controller test is unstable. It's not passing everytime.
->>>>>>> Stashed changes
+- When token expires, it should logout automatically.
