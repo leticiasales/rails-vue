@@ -1,24 +1,20 @@
 require 'rails_helper'
-RSpec.describe EmployeesController, type: :controller do
+RSpec.describe PositionsController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
-  # Employee. As you add validations to Employee, be sure to
+  # Position. As you add validations to Position, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    FactoryBot.attributes_for(:employee)
+    { name: Faker::Job.title }
   }
 
   let(:invalid_attributes) {
-    { 
-      name: "a",
-      salary: Faker::Number.decimal
-    }
+    { name: "a" }
   }
 
   describe "GET #index" do
     it "returns a success response" do
-      position = create(:position)
-      employee = create(:employee, position_id: position.id)
+      position = Position.create! valid_attributes
       @user = create(:user)
       request.headers['Authorization'] = ApplicationHelper.encode(user_id: @user.id)
       
@@ -30,51 +26,41 @@ RSpec.describe EmployeesController, type: :controller do
   describe "GET #show" do
     it "returns a success response" do
       @user = create(:user)
-      position = create(:position)
-      employee = create(:employee, position_id: position.id)
+      position = Position.create! valid_attributes
       request.headers['Authorization'] = ApplicationHelper.encode(user_id: @user.id)
 
-      get :show, params: {id: employee.to_param}
+      get :show, params: {id: position.to_param}
       expect(response).to be_successful
     end
   end
 
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new Employee" do
+      it "creates a new Position" do
         @user = create(:user)
         request.headers['Authorization'] = ApplicationHelper.encode(user_id: @user.id)
-
-        position = create(:position)
-        valid_attributes[:position_id] = position.id
 
         expect {
-          post :create, params: {employee: valid_attributes}
-        }.to change(Employee, :count).by(1)
+          post :create, params: {position: valid_attributes}
+        }.to change(Position, :count).by(1)
       end
 
-      it "renders a JSON response with the new employee" do
+      it "renders a JSON response with the new position" do
         @user = create(:user)
         request.headers['Authorization'] = ApplicationHelper.encode(user_id: @user.id)
 
-        position = create(:position)
-        valid_attributes[:position_id] = position.id
-
-        post :create, params: {employee: valid_attributes}
+        post :create, params: {position: valid_attributes}
         expect(response).to have_http_status(:created)
-        expect(response.location).to eq(employee_url(Employee.last))
+        expect(response.location).to eq(position_url(Position.last))
       end
     end
 
     context "with invalid params" do
-      it "renders a JSON response with errors for the new employee" do
+      it "renders a JSON response with errors for the new position" do
         @user = create(:user)
         request.headers['Authorization'] = ApplicationHelper.encode(user_id: @user.id)
 
-        position = create(:position)
-        invalid_attributes[:position_id] = position.id
-
-        post :create, params: {employee: invalid_attributes}
+        post :create, params: {position: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -86,51 +72,45 @@ RSpec.describe EmployeesController, type: :controller do
         { name: Faker::Job.title }
       }
 
-      it "updates the requested employee" do
+      it "updates the requested position" do
         @user = create(:user)
         request.headers['Authorization'] = ApplicationHelper.encode(user_id: @user.id)
-        position = create(:position)
-        employee = create(:employee, position_id: position.id)
+        position = Position.create! valid_attributes
 
-        put :update, params: {id: employee.to_param, employee: new_attributes}
+        put :update, params: {id: position.to_param, position: new_attributes}
       end
 
-      it "renders a JSON response with the employee" do
+      it "renders a JSON response with the position" do
         @user = create(:user)
         request.headers['Authorization'] = ApplicationHelper.encode(user_id: @user.id)
-        position = create(:position)
-        employee = create(:employee, position_id: position.id)
+        position = Position.create! valid_attributes
 
-        put :update, params: {id: employee.to_param, employee: valid_attributes}
+        put :update, params: {id: position.to_param, position: valid_attributes}
         expect(response).to have_http_status(:ok)
       end
     end
 
     context "with invalid params" do
-      it "renders a JSON response with errors for the employee" do
+      it "renders a JSON response with errors for the position" do
         @user = create(:user)
         request.headers['Authorization'] = ApplicationHelper.encode(user_id: @user.id)
-        position = create(:position)
-        employee = create(:employee, position_id: position.id)
+        position = Position.create! valid_attributes
 
-        invalid_attributes[:position_id] = position.id
-
-        put :update, params: {id: employee.to_param, employee: invalid_attributes}
+        put :update, params: {id: position.to_param, position: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
   describe "DELETE #destroy" do
-    it "destroys the requested employee" do
+    it "destroys the requested position" do
       @user = create(:user)
       request.headers['Authorization'] = ApplicationHelper.encode(user_id: @user.id)
-      position = create(:position)
-      employee = create(:employee, position_id: position.id)
+      position = Position.create! valid_attributes
 
       expect {
-        delete :destroy, params: {id: employee.to_param}
-      }.to change(Employee, :count).by(-1)
+        delete :destroy, params: {id: position.to_param}
+      }.to change(Position, :count).by(-1)
     end
   end
 
