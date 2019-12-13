@@ -1,0 +1,22 @@
+.form {
+  display: block;
+}
+
+.md-card {
+  width: 320px;
+  margin: 8px 8px 16px;
+  display: inline-block;
+  vertical-align: top;
+
+  &.show {
+    width: 640px;
+  }
+}
+
+.md-menu-content {
+  z-index: 110;
+}
+
+.md-field .md-input {
+  border-bottom: 1px solid #ddd;
+}
