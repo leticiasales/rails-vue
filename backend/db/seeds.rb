@@ -6,4 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-user = User.create({username: "admin", password: "password"})
+User.create({username: "admin", password: "password"})
+
+position = Position.create({name: Faker::Job.title})
+Employee.create({name: Faker::Name.name, salary: Faker::Number.decimal, position_id: position.id})
